@@ -1,9 +1,6 @@
 ﻿
-public class BookingTimeSlot
+public record BookingTimeSlot(int Hour, int Minute)
 {
-    public int Hour { get; set; }
-    public int Minute { get; set; }
-
     public DateTime GetDateTime()
     {
         return new DateTime(1, 1, 1, Hour, Minute, 0);

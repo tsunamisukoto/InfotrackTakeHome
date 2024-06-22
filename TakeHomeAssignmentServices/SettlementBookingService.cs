@@ -9,7 +9,7 @@ public class SettlementBookingService : ISettlementBookingService
     private static List<SettlementBooking> _timeSlots = new List<SettlementBooking>();
 
     public SettlementBookingService()
-    {    
+    {
     }
 
     /// <summary>
@@ -18,7 +18,7 @@ public class SettlementBookingService : ISettlementBookingService
     /// <param name="bookings"></param>
     public SettlementBookingService(List<SettlementBooking> bookings)
     {
-        _timeSlots= bookings;
+        _timeSlots = bookings;
     }
     /// <summary>
     /// Similar to above, I probably wouldn't use a record for the entity in prod, but (last I checked EF doesn't play nice with them) but it keeps me honest and makes sure I define all usages for now.
@@ -72,7 +72,7 @@ public class SettlementBookingService : ISettlementBookingService
             hour >= 9 && hour <= 16 &&
             minute >= 0 && minute <= 59)
         {
-            timeSlot = new BookingTimeSlot { Hour = hour, Minute = minute };
+            timeSlot = new BookingTimeSlot(hour, minute);
             return true;
         }
 

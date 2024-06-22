@@ -6,7 +6,7 @@ namespace TakeHomeAssignmentServiceTests;
 
 public class SettlementBookingServiceFacts
 {
-    public List<SettlementBookingService.SettlementBooking> ListReference { get; private set; }
+    public List<SettlementBooking> ListReference { get; private set; }
 
     public SettlementBookingService Fixture;
     [SetUp]
@@ -14,7 +14,7 @@ public class SettlementBookingServiceFacts
     {
 
         // Note: Doing a bit of dodgy here, you'd realistically mock a db context and poke "it" to see if things have been added, instead im just raw using a reference to a list.
-        ListReference = new List<SettlementBookingService.SettlementBooking>();
+        ListReference = new List<SettlementBooking>();
         Fixture = new SettlementBookingService(ListReference);
 
     }
@@ -25,7 +25,7 @@ public class SettlementBookingServiceFacts
     [Test]
     public void BookSlot_ShouldAddToList()
     {
-        var time = new BookingTimeSlot() { Hour = 1, Minute = 2 };
+        var time = new BookingTimeSlot(1, 2);
         Fixture.BookSlot("Test 1", time);
 
         Assert.That(ListReference.Count, Is.EqualTo(1));
@@ -36,9 +36,9 @@ public class SettlementBookingServiceFacts
     [Test]
     public void GetBookings_ShouldReturnAllEntities()
     {
-        ListReference.Add(new SettlementBookingService.SettlementBooking(Guid.NewGuid(), "test1", new BookingTimeSlot() { Hour = 1, Minute = 2 }));
-        ListReference.Add(new SettlementBookingService.SettlementBooking(Guid.NewGuid(), "test2", new BookingTimeSlot() { Hour = 1, Minute = 2 }));
-        ListReference.Add(new SettlementBookingService.SettlementBooking(Guid.NewGuid(), "test3", new BookingTimeSlot() { Hour = 1, Minute = 2 }));
+        ListReference.Add(new SettlementBookingService.SettlementBooking(Guid.NewGuid(), "test1", new BookingTimeSlot(1, 2) ));
+        ListReference.Add(new SettlementBookingService.SettlementBooking(Guid.NewGuid(), "test2", new BookingTimeSlot(1, 2)));
+        ListReference.Add(new SettlementBookingService.SettlementBooking(Guid.NewGuid(), "test3", new BookingTimeSlot(1, 2)));
         var result = Fixture.GetBookings();
 
         Assert.That(result.Count, Is.EqualTo(3));
@@ -51,9 +51,9 @@ public class SettlementBookingServiceFacts
     [Test]
     public void GetOverlappingBookings_ShouldReturnOverlappingEntities()
     {
-        ListReference.Add(new SettlementBooking(Guid.NewGuid(), "test1", new BookingTimeSlot() { Hour = 1, Minute = 0 }));
-        ListReference.Add(new SettlementBooking(Guid.NewGuid(), "test2", new BookingTimeSlot() { Hour = 2, Minute = 0 }));
-        ListReference.Add(new SettlementBooking(Guid.NewGuid(), "test3", new BookingTimeSlot() { Hour = 3, Minute = 0 }));
+        ListReference.Add(new SettlementBooking(Guid.NewGuid(), "test1", new BookingTimeSlot(1, 0)));
+        ListReference.Add(new SettlementBooking(Guid.NewGuid(), "test2", new BookingTimeSlot(2, 0)));
+        ListReference.Add(new SettlementBooking(Guid.NewGuid(), "test3", new BookingTimeSlot(3, 0)));
 
         var newStartTime = new DateTime(1, 1, 1, 2, 30, 0);
         var newEndTime = newStartTime.AddHours(1);
@@ -66,7 +66,7 @@ public class SettlementBookingServiceFacts
     }
 
     [TestCase("10:30", 10, 30)]
-    [TestCase("09:00", 9, 0)]  
+    [TestCase("09:00", 9, 0)]
     [TestCase("16:59", 16, 59)]
     public void IsValidBookingTime_ShouldValidateTimeForValidCases(string inputTime, int expectedHour, int expectedMinute)
     {
@@ -80,8 +80,8 @@ public class SettlementBookingServiceFacts
 
     [TestCase("08:30")]
     [TestCase("10:60")]
-    [TestCase("")]     
-    [TestCase(null)]   
+    [TestCase("")]
+    [TestCase(null)]
     [TestCase("10-30")]
     public void IsValidBookingTime_ShouldValidateTimeForInvalidCases(string inputTime)
     {

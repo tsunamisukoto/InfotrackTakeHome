@@ -21,8 +21,6 @@ public class SettlementController : ControllerBase
     }
 
 
-
-
     [HttpPost(Name = "BookSettlement")]
     public ActionResult<BookingSuccessModel> BookSettlement([FromBody] BookingRequestModel request)
     {
@@ -31,6 +29,7 @@ public class SettlementController : ControllerBase
         // Other advantages of fluent validation or some equivalent is that we could return more detailed errors to say "why" its wrong/failed.
         if (request == null || string.IsNullOrWhiteSpace(request.Name) || !this.settlementBookingService.IsValidBookingTime(request.BookingTime, out var timeSlot))
         {
+            _logger.LogError("Invalid booking request");
             return BadRequest();
         }
 
@@ -39,6 +38,7 @@ public class SettlementController : ControllerBase
         var overlappingBookings = this.settlementBookingService.GetOverlappingBookings(newStartTime, newEndTime);
         if (overlappingBookings.Count >= MAX_SIMILTANEOUS_BOOKINGS)
         {
+            _logger.LogError("Conflicting booking request");
             return Conflict("There are 4 or more time slots that already overlap");
         }
 
