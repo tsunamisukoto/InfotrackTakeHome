@@ -16,3 +16,4 @@ I've tried to keep things demonstrative of what I think you'd be looking for/at,
 
 ![image](https://github.com/tsunamisukoto/InfotrackTakeHome/assets/11450584/99fba959-44c2-4aaa-8140-e27c2705ab52)
 ![image](https://github.com/tsunamisukoto/InfotrackTakeHome/assets/11450584/706e8795-9224-4405-91db-3ae206a599a2)
+![image](https://github.com/tsunamisukoto/InfotrackTakeHome/assets/11450584/d5b861d8-fa7b-4a2c-a43d-4cf92e427fab)
