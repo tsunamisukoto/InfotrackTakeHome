@@ -13,6 +13,7 @@ I've tried to keep things demonstrative of what I think you'd be looking for/at,
 3. I probably could have logged more, but as its quite a basic problem space I kept it to just errors.
 4. Probably also could have done the validation as throwing exceptions that could get handled/logged at the base api level, but not sure which pattern I prefer.
 5. I take the hours and minutes and shove it into a date object for some easy comparisons, there's probably a simpler way to do it, but I decided this was the quickest way to get the "1 hour" comparison going :P
+6. There wasn't user auth validation requirements on this piece, nor rate limiting etc, but you'd probably do as much in a prod system. But that was gonna go outside the time bounds assigned
 
 I have attached screen grabs of the end points you'll be expected to hit. But if you download the source and run the InfotrackTakeHome project, you should have all the pieces you'll need.
 ![image](https://github.com/tsunamisukoto/InfotrackTakeHome/assets/11450584/99fba959-44c2-4aaa-8140-e27c2705ab52)
